@@ -1,12 +1,10 @@
 pipeline {
-    agent any
-pipeline {
     agent none
     stages {
         stage('Run on both nodes') {
             parallel {
-                stage('Build on node1') {
-                    agent { label 'tp' } // Replace 'node1' with your actual node label
+                stage('Node1') {
+                    agent { label 'tp' } // Replace 'tp' with your node1 label if different
                     stages {
                         stage('Building') {
                             steps {
@@ -35,8 +33,8 @@ pipeline {
                         }
                     }
                 }
-                stage('Build on node2') {
-                    agent { label 'tp' } // Replace 'node2' with your actual node label
+                stage('Node2') {
+                    agent { label 'tp' } // Replace 'tp' with your node2 label if different
                     stages {
                         stage('Building') {
                             steps {
