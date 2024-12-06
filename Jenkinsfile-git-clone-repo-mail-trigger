@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        
+        stage('Clone Git Repo') {
+            steps {
+                // One or more steps need to be included within the steps block.
+                echo "Downloading files from GitHub URL"
+                
+                input message: 'Do you want to continue?'
+                
+                git branch: 'main', url: 'https://github.com/Sohail130/jenkins-pipline-code.git'
+            }
+        }
+
+        stage('Check File Existence') {
+            steps {
+                echo "Check whether files exist or not"
+                
+                script {
+                    // Checking if the Dockerfile exists in the given path
+                    if (fileExists('/var/lib/jenkins/workspace/PP-using-syntax/dockerfile')) {
+                        echo "File exists"
+                    } else {
+                        echo "File does not exist"
+                    }
+                }
+            }
+        }
+
+        stage('Send Mail') {
+            steps {
+                script {
+                    // Sending the email
+                    mail bcc: '', 
+                         body: 'Job PP-using-syntax status has been successfully run', 
+                         cc: '', 
+                         from: 'khansh1515@gmail.com', 
+                         replyTo: '', 
+                         subject: 'PP-using-syntax status', 
+                         to: 'ksohail1996.sk@gmail.com'
+                }
+            }
+        }
+    }
+}
